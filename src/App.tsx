@@ -1,24 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonSplitPane, IonToolbar, IonTitle, IonPage } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-
-import { apps, flash, send, add, list, information } from 'ionicons/icons';
+import { add, information, list } from 'ionicons/icons';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/SideMenu';
+import { AppPage } from './declarations';
 import AddPage from './pages/Add';
 import ListPage from './pages/List';
 import StatusPage from './pages/Status';
-import {AppPage} from './declarations';
 
-const store = require('data-store')(({ path: process.cwd() + '/jobStore.json' }));
+
+
+
+//const store = require('data-store')(({ path: process.cwd() + '/jobStore.json' }));
 
 const appPages: AppPage[] = [
   {
@@ -44,20 +44,14 @@ let pushOrder:any = (order:any)=>{
   jobOrderList.push(order.name);
 }
 
-let getOrderList = ()=>{
-  return jobOrderList;
-}
-
-
-
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonSplitPane contentId="main">
         <Menu appPages={appPages} />
         <IonRouterOutlet id="main">
-        <Route path="/status" render={()=><StatusPage/>} exact={true} />
-        <Route path="/add" render={()=><AddPage addNewOrder={pushOrder}/>} exact={true} />
+          <Route path="/status" render={()=><StatusPage/>} exact={true} />
+          <Route path="/add" render={()=><AddPage addNewOrder={pushOrder}/>} exact={true} />
           <Route path="/list" render={()=><ListPage jobOrderList={jobOrderList}/>} exact={true} />
           <Route path="/" render={() => <Redirect to="/list" exact={true} /> } />
         </IonRouterOutlet>

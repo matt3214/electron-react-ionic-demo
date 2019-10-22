@@ -1,5 +1,5 @@
-import React from 'react'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonLabel, IonMenuButton, IonButtons } from '@ionic/react'
+import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonLabel, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import React from 'react';
 
 
 type Props={
@@ -26,6 +26,9 @@ const AddPage: React.FC<Props>=(props)=>{
             <IonButton onClick={addOrder}>
                 <IonLabel>Click to do something!</IonLabel>
             </IonButton>
+            <IonInput value="custom">
+
+            </IonInput>
         </IonContent>
     </IonPage>
     )
