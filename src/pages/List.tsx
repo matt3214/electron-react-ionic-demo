@@ -1,18 +1,31 @@
 import React from 'react'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonItem, IonList, IonMenuButton, IonButtons } from '@ionic/react';
 
-const ListPage: React.FC=()=>{
+type Props={
+    jobOrderList:{}[];
+}
+
+const ListPage: React.FC<Props>=(props)=>{
     return(
     <IonPage>
         <IonHeader>
             <IonToolbar>
+                <IonButtons slot="start" >
+                    <IonMenuButton />
+                </IonButtons>
                 <IonTitle>Order List</IonTitle>
             </IonToolbar>
         </IonHeader>
         <IonContent>
-            <h1>
-                Stuff here
-            </h1>
+            <IonList>
+            {props.jobOrderList.map((job,i)=>
+               <IonItem key={i}>
+                    <IonLabel>
+                        {job}
+                    </IonLabel>
+               </IonItem>
+            )}
+            </IonList>
         </IonContent>
     </IonPage>
     )

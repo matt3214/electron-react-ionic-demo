@@ -1,18 +1,31 @@
 import React from 'react'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonLabel, IonMenuButton, IonButtons } from '@ionic/react'
 
-const AddPage: React.FC=()=>{
+
+type Props={
+    addNewOrder:(order:any)=>void;
+}
+
+const AddPage: React.FC<Props>=(props)=>{
+    let addOrder=()=>{
+        let newOrder = {"name":"New Order"};
+        props.addNewOrder(newOrder);
+    }
+
     return(
     <IonPage>
         <IonHeader>
             <IonToolbar>
+                <IonButtons slot="start" >
+                    <IonMenuButton />
+                </IonButtons>
                 <IonTitle>Add New Order</IonTitle>
             </IonToolbar>
         </IonHeader>
         <IonContent>
-            <h1>
-                Stuff here
-            </h1>
+            <IonButton onClick={addOrder}>
+                <IonLabel>Click to do something!</IonLabel>
+            </IonButton>
         </IonContent>
     </IonPage>
     )
