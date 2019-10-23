@@ -12,6 +12,7 @@
     "@types/react-dom": "^16.9.2",
     "@types/react-router": "^5.1.2",
     "@types/react-router-dom": "^5.1.0",
+    "@types/uuid": "^3.4.5",
     "cross-env": "^6.0.3",
     "data-store": "^4.0.3",
     "electron-is-dev": "^1.1.0",
@@ -24,7 +25,8 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "uuid": "^3.3.3"
   },
   "description": "electron-react-ionic template app",
   "author": "Matthew Duffy",

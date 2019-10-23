@@ -6,11 +6,10 @@ import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-import { add, information, list } from 'ionicons/icons';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/SideMenu';
-import { AppPage } from './declarations';
+import { appPages, CreationOrderEvent, OrderForm, OrderFulfillmentJob } from './declarations';
 import AddPage from './pages/Add';
 import ListPage from './pages/List';
 import StatusPage from './pages/Status';
@@ -20,28 +19,19 @@ import StatusPage from './pages/Status';
 
 //const store = require('data-store')(({ path: process.cwd() + '/jobStore.json' }));
 
-const appPages: AppPage[] = [
-  {
-    title: 'Order Creator',
-    url: '/add',
-    icon: add
-  },
-  {
-    title: 'Order List',
-    url: '/list',
-    icon: list
-  },
-  {
-    title: 'Status Page',
-    url: '/status',
-    icon: information
-  }
-];
+if (!Date.now) {
+  Date.now = function() { return new Date().getTime(); }
+}
 
-let jobOrderList:any[] = [];
 
-let pushOrder:any = (order:any)=>{
-  jobOrderList.push(order.name);
+
+let jobOrderList:OrderFulfillmentJob[] = [];
+
+let pushOrder:any = (order:OrderForm)=>{
+  let newOrderJob = new OrderFulfillmentJob(order.nickname); // Create a new job with the nickname given
+
+  newOrderJob.addEvent(new CreationOrderEvent({destinationAddress:order.destinationAddress,packageSize:order.packageSize})) // Add a creation event, could be consolidated into the constructor
+  jobOrderList.push(newOrderJob); // add this job to the job list
 }
 
 const App: React.FC = () => (
