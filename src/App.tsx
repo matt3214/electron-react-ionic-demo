@@ -9,7 +9,7 @@ import '@ionic/react/css/typography.css';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/SideMenu';
-import { appPages, CreationOrderEvent, OrderForm, OrderFulfillmentJob } from './declarations';
+import { appPages, CreationOrderEvent, OrderForm, OrderFulfillmentJob, JobManager } from './declarations';
 import AddPage from './pages/Add';
 import ListPage from './pages/List';
 import StatusPage from './pages/Status';
@@ -25,14 +25,9 @@ if (!Date.now) {
 
 
 
-let jobOrderList:OrderFulfillmentJob[] = [];
 
-let pushOrder:any = (order:OrderForm)=>{
-  let newOrderJob = new OrderFulfillmentJob(order.nickname); // Create a new job with the nickname given
+let man:JobManager = new JobManager();
 
-  newOrderJob.addEvent(new CreationOrderEvent({destinationAddress:order.destinationAddress,packageSize:order.packageSize})) // Add a creation event, could be consolidated into the constructor
-  jobOrderList.push(newOrderJob); // add this job to the job list
-}
 
 const App: React.FC = () => (
   <IonApp>
@@ -41,8 +36,8 @@ const App: React.FC = () => (
         <Menu appPages={appPages} />
         <IonRouterOutlet id="main">
           <Route path="/status" render={()=><StatusPage/>} exact={true} />
-          <Route path="/add" render={()=><AddPage addNewOrder={pushOrder}/>} exact={true} />
-          <Route path="/list" render={()=><ListPage jobOrderList={jobOrderList}/>} exact={true} />
+          <Route path="/add" render={()=><AddPage addNewOrder={man.pushOrder}/>} exact={true} />
+          <Route path="/list" render={()=><ListPage jobOrderList={man.jobOrderList}/>} exact={true} />
           <Route path="/" render={() => <Redirect to="/list" exact={true} /> } />
         </IonRouterOutlet>
       </IonSplitPane>
