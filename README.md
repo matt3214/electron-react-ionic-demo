@@ -8,7 +8,7 @@ Ionic is also included in the packages.json file and can be imported and used wi
 
 The app demonstrates a possible integration of Ionic and React.
 
-To run, start by running `yarn` in the root directory to install all packages.
+Start by running `yarn` in the root directory to install all packages.
 
 ## Available Scripts
 
