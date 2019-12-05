@@ -1,14 +1,25 @@
-### Welcome to the Ionic-React Order Tracking Demo
+### Welcome to the Ionic-React-Electron Order Tracking Demo
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The project contains the structure necessary for a barebones react app, along with some logic for storing delivery orders.
+The project contains the structure necessary for a barebones react app hosted in Electron, along with some logic for storing delivery orders.
 
 Ionic is also included in the packages.json file and can be imported and used with React.
 
-The app demonstrates a possible integration of Ionic and React.
+The app demonstrates a possible integration of Ionic, React and Electron.
 
 Start by running `yarn` in the root directory to install all packages.
+
+## Electron's Role:
+
+Electron runs alongside the backend web service after the backend web service (React+Ionic) opens the port 3000 on the localhost.
+
+It simply serves the webpage that is gathered from the backend web service.
+
+I was building in local storage, but it didn't get very far, as, to store files locally, I need to set up remote function calls to keep the Electron app secure from running unsafe code served by the development backend (or whoever is serving at port 3000 on localhost)
+
+The Electron front end does reference the actual html when the project is built and packaged (or at least that is the goal), but during development, the Electron app references localhost:3000 for the page.
+
 
 ## Available Scripts
 
