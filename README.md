@@ -1,10 +1,14 @@
+### Welcome to the Ionic-React Order Tracking Demo
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The project contains the structure necessary for a barebones react app.
+The project contains the structure necessary for a barebones react app, along with some logic for storing delivery orders.
 
 Ionic is also included in the packages.json file and can be imported and used with React.
 
-Start by running yarn in the root directory to install all packages.
+The app demonstrates a possible integration of Ionic and React.
+
+To run, start by running `yarn` in the root directory to install all packages.
 
 ## Available Scripts
 
