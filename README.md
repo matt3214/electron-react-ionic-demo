@@ -18,7 +18,7 @@ It simply serves the webpage that is gathered from the backend web service.
 
 I was building in local storage, but it didn't get very far, as, to store files locally, I need to set up remote function calls to keep the Electron app secure from running unsafe code served by the development backend (or whoever is serving at port 3000 on localhost)
 
-The Electron front end does reference the actual html when the project is built and packaged (or at least that is the goal), but during development, the Electron app references localhost:3000 for the page. checkout `./public/electron.js` for more details.
+The Electron front end does reference the actual html when the project is built and packaged (or at least that is the goal), but during development, the Electron app references localhost:3000 for the page. check out `./public/electron.js` for more details.
 
 
 ## Available Scripts
