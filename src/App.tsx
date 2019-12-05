@@ -9,7 +9,7 @@ import '@ionic/react/css/typography.css';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/SideMenu';
-import { appPages, CreationOrderEvent, OrderForm, OrderFulfillmentJob, JobManager } from './declarations';
+import { appPages, JobManager } from './declarations';
 import AddPage from './pages/Add';
 import ListPage from './pages/List';
 import StatusPage from './pages/Status';

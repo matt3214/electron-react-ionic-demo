@@ -12,7 +12,9 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: false,
-      devTools: isDev
+      devTools: isDev,
+      preload: './utils/preload.js',
+      allowEval: false // This is the key!
     },
   })
 

@@ -20,6 +20,8 @@
     "ionic": "^5.4.4",
     "ionic-react": "^0.0.0",
     "ionicons": "^4.6.3",
+    "local-storage": "^2.0.0",
+    "localforage": "^1.7.3",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-router": "^5.1.2",
@@ -28,6 +30,7 @@
     "typescript": "^3.6.4",
     "uuid": "^3.3.3"
   },
+  "homepage": "./",
   "description": "electron-react-ionic template app",
   "author": "Matthew Duffy",
   "build": {

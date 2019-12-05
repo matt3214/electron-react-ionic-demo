@@ -29,7 +29,7 @@ const ListPage: React.FC<Props>=(props)=>{
                     <IonCard>
                         <IonCardHeader>
                             <IonCardTitle>
-                                {job.getReadableName()}
+                                {job.getPropByName('nickname')}
                             </IonCardTitle>
                             <IonCardSubtitle>
                                 {job.getPropByName('orderStatus')}

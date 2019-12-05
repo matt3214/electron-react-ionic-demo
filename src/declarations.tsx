@@ -1,10 +1,8 @@
 import { add, information, list } from 'ionicons/icons';
 import uuidv4 from 'uuid/v4';
 
-
-const Store = require('electron-store');
-const store = new Store();
-
+import store,{clear,get,set} from 'local-storage';
+import localForage from "localforage"
 
 export interface AppPage {
   url: string;
@@ -45,6 +43,7 @@ export type Artifact={
 export type CreationDetails={
   destinationAddress:string; //where to? 
   packageSize:number; //How large a package (in cubic feet)
+  nickname:string; //a name for the order
 }
 
 export type AssignementDetails={
@@ -136,6 +135,7 @@ export let BaseOrderEvent = class BaseOrderEvent {
 export let CreationOrderEvent = class CreationOrderEvent extends BaseOrderEvent{
   constructor(creationDetails:CreationDetails){
     super(OrderEventTypes.CREATION); // Self explanatory
+    this.addArtifact("nickname", creationDetails.nickname); // Add order creation time
     this.addArtifact("eventCreationTime", + new Date()); // Add order creation time
     this.addArtifact("destinationAddress",creationDetails.destinationAddress); // Add order destination
     this.addArtifact("orderStatus",OrderStatuses.IDLE); // Add order status
@@ -165,20 +165,19 @@ class OrderEventTimeline{
 }
 
 export class OrderFulfillmentJob{
-  name:string = "Job"
-  id:string;
-  artifacts:Artifact[];
+  name:string = "Default Job"
+  id:string = "";
+  artifacts:Artifact[] = [];
   eventTimeline:OrderEventTimeline = new OrderEventTimeline();
   debug_messages:string[] = [];
 
-  constructor(name:string,uuid?:string){    
-    if(!uuid){
-      this.id = uuidv4();
+  constructor(obj?:any) {
+    if (obj){
+      Object.assign(this, obj);
     }else{
-      this.id = uuid;
+      this.id = uuidv4();
+      this.artifacts = [];
     }
-    this.name = name;
-    this.artifacts = [];
   }
 
   addEvent(event: typeof BaseOrderEvent.prototype){
@@ -186,6 +185,9 @@ export class OrderFulfillmentJob{
     let newArtifacts:Artifact[] = [];
     event.artifacts.map(artifact=>{
       //Edit artifacts as they come in here if needed
+      if(artifact.artifactName == "nickname"){
+        this.name = artifact.value;
+      }
       newArtifacts.push(artifact)
     })
     this.artifacts.push(...event.artifacts);
@@ -222,17 +224,43 @@ export class OrderFulfillmentJob{
     return this.name;
   }
 
-  toStorage(){
-    store.set(this);
+  static toStorable=(job:OrderFulfillmentJob)=>{
+    return {
+      _class:'OrderFulfillmentJob',
+      name:job.name,
+      id:job.id,
+      artifacts:job.artifacts,
+      eventTimeline:job.eventTimeline,
+      debug_messages:job.debug_messages
+    }
   }
+
+  toStorage(){
+    clear();
+    store('entry0',this);
+    console.log(this);
+    let obj;
+    try{
+      obj = get('entry0');
+    }catch(e){
+      console.log(e);
+    }
+
+    obj = new OrderFulfillmentJob(obj);
+    console.log(obj);
+    console.log("They are the same? : " + (obj==this));
+  }
+
+
+
 }
 
 export class JobManager{
   jobOrderList:OrderFulfillmentJob[] = [];
 
   pushOrder:any = (order:OrderForm)=>{
-    let newOrderJob = new OrderFulfillmentJob(order.nickname); // Create a new job with the nickname given
-    newOrderJob.addEvent(new CreationOrderEvent({destinationAddress:order.destinationAddress,packageSize:order.packageSize})) // Add a creation event, could be consolidated into the constructor
+    let newOrderJob = new OrderFulfillmentJob(); // Create a new job with the nickname given
+    newOrderJob.addEvent(new CreationOrderEvent({destinationAddress:order.destinationAddress,packageSize:order.packageSize,nickname:order.nickname})) // Add a creation event, could be consolidated into the constructor
     this.jobOrderList.push(newOrderJob); // add this job to the job list
   }
   printDebugMessages(){
